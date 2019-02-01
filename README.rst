@@ -8,9 +8,13 @@ Quickstart
 Install via ``python ./setup.py install``.
 
 Basic usage:
+
 .. code-block:: python
+
     >>> import redis
+    
     >>> import redisdb
+    
     >>> db = redisdb.redisdb(redis.Redis(host = "localhost", port = 6379))
 
 From now on ``db`` is a dict-like python object that can contain any type of objects.
