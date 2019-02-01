@@ -19,8 +19,11 @@ Basic usage:
 
 From now on ``db`` is a dict-like python object that can contain any type of objects.
 Currently supported objects:
+
 - dictionary
+
 - list
+
 - basic datatype (string, int, byte, etc...)
 
 © 2019-? Knightingale <kg@cyberknights.io>
