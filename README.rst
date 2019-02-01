@@ -8,7 +8,6 @@ Quickstart
 Install via ``python ./setup.py install``.
 
 Basic usage:
-
 .. code-block:: python
     >>> import redis
     >>> import redisdb
