@@ -53,6 +53,7 @@ class redict(rebase._rebase):
 			return self._cache[key]
 
 		if self._keys is None:
+			# print "Key returned from cache"
 			self._keys = keys = self._get_data()
 		else:
 			keys = self._keys
@@ -98,4 +99,24 @@ class redict(rebase._rebase):
 		# Reset cache
 		self._keys = None
 
+	def __delitem__(self, key):
+		if self._keys is None:
+			keys = self._get_data()
+		else:
+			keys = self._keys
 
+		# Delete the reference to the key
+		if key in self._cache:
+			self._cache[key]._ref_dec()
+			del self._cache[key]
+		else:
+			self._get(keys[key])._ref_dec()
+
+		# Delete the key
+		del keys[key]
+
+		# Rewrite
+		self._set(keys)
+
+		# Reset cache
+		self._keys = None
