@@ -7,8 +7,8 @@ import rebase
 import redata
 
 class redict(rebase._rebase):
-	def __init__(self, conn, id = None):
-		rebase._rebase.__init__(self, conn, id)
+	def __init__(self, conn, id = None, cache = True):
+		rebase._rebase.__init__(self, conn, id, cache)
 
 		self._keys = None
 		self._cache = {}
@@ -49,7 +49,7 @@ class redict(rebase._rebase):
 
 	def __getitem__(self, key):
 		# First check in cache
-		if key in self._cache:
+		if self.cache and key in self._cache:
 			return self._cache[key]
 
 		if self._keys is None:
@@ -67,13 +67,14 @@ class redict(rebase._rebase):
 			ret = ret._get_data()
 
 		# Save in cache
-		self._cache[key] = ret
+		if self.cache:
+			self._cache[key] = ret
 
 		return ret
 
 	def __setitem__(self, key, value):
 		# Invalidate cache for given key
-		if key in self._cache:
+		if self.cache and key in self._cache:
 			del self._cache[key]
 
 		if self._keys is None:
@@ -106,7 +107,7 @@ class redict(rebase._rebase):
 			keys = self._keys
 
 		# Delete the reference to the key
-		if key in self._cache:
+		if self.cache and key in self._cache:
 			self._cache[key]._ref_dec()
 			del self._cache[key]
 		else:

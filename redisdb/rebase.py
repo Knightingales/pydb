@@ -17,9 +17,10 @@ def _retype(obj):
 		return redata.redata
 
 class _rebase:
-	def __init__(self, conn, id = None):
+	def __init__(self, conn, id = None, cache = True):
 		self._conn = conn
 
+		self.cache = cache
 		self._id = id
 		self._create()
 
@@ -59,7 +60,7 @@ class _rebase:
 		data = pickle.loads(self._conn.get(id))
 
 		# Decide on object type
-		reobj = _retype(data)(self._conn)
+		reobj = _retype(data)(self._conn, cache = self.cache)
 
 		reobj._id = id
 

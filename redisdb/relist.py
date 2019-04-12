@@ -7,8 +7,8 @@ import rebase
 import redata
 
 class relist(rebase._rebase):
-	def __init__(self, conn, id = None):
-		rebase._rebase.__init__(self, conn, id)
+	def __init__(self, conn, id = None, cache = True):
+		rebase._rebase.__init__(self, conn, id, cache)
 
                 self._cache = {}
 		self._keys = None
@@ -79,7 +79,8 @@ class relist(rebase._rebase):
 		if isinstance(ret, redata.redata):
 			ret = ret._get_data()
 
-		self._cache[index] = ret
+		if self.cache:
+			self._cache[index] = ret
 
 		return ret
 
@@ -111,4 +112,5 @@ class relist(rebase._rebase):
 		self._keys = None
 
                 # Delete cached item
-		del self._cache[index]
+		if self.cache:
+			del self._cache[index]

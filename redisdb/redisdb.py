@@ -7,8 +7,8 @@ import rebase
 import redict
 
 class redisdb(redict.redict):
-	def __init__(self, conn):
-		redict.redict.__init__(self, conn, "root")
+	def __init__(self, conn, cache = True):
+		redict.redict.__init__(self, conn, "root", cache)
 
 		# Initialize root if neccessary
 		if self._get_data() is None:
