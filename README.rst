@@ -1,4 +1,4 @@
-Redis DB
+Python-Objects-DB
 ========
 Any DB-backed Python-like multi-dimensional objects.
 
