@@ -3,12 +3,12 @@
 import redis
 import uuid
 import pickle
-import rebase
-import redata
+import dbbase
+import dbdata
 
-class relist(rebase._rebase):
+class dblist(dbbase._dbbase):
 	def __init__(self, conn, id = None, cache = True):
-		rebase._rebase.__init__(self, conn, id, cache)
+		dbbase._dbbase.__init__(self, conn, id, cache)
 
                 self._cache = {}
 		self._keys = None
@@ -19,7 +19,7 @@ class relist(rebase._rebase):
 		else:
 			keys = self._keys
 
-		reobj = rebase._retype(data)(self._conn)
+		reobj = dbbase._retype(data)(self._conn)
 		reobj._initialize(data)
 		keys.append(reobj._id)
 		reobj._ref_inc()
@@ -49,7 +49,7 @@ class relist(rebase._rebase):
 	def _initialize(self, data):
 		keys = []
 		for d in data:
-			reobj = rebase._retype(d)(self._conn)
+			reobj = dbbase._retype(d)(self._conn)
 			reobj._initialize(d)
 			keys.append(reobj._id)
 			reobj._ref_inc()
@@ -57,7 +57,7 @@ class relist(rebase._rebase):
 		self._set(keys)
 
 	def __add__(self, other):
-		if type(other) != list and not isinstance(other, relist):
+		if type(other) != list and not isinstance(other, dblist):
 			raise Exception("Invalid object for addition")
 
 		for obj in other:
@@ -76,7 +76,7 @@ class relist(rebase._rebase):
 
 		ret = self._get(keys[index])
 
-		if isinstance(ret, redata.redata):
+		if isinstance(ret, dbdata.dbdata):
 			ret = ret._get_data()
 
 		if self.cache:
@@ -93,10 +93,10 @@ class relist(rebase._rebase):
 		if index >= len(keys):
 			raise Exception("Index %d is out of bounds" % index)
 
-		if isinstance(value, rebase._rebase):
+		if isinstance(value, dbbase._dbbase):
 			reobj = value
 		else:
-			reobj = rebase._retype(value)(self._conn)
+			reobj = dbbase._retype(value)(self._conn)
 			reobj._initialize(value)
 
 

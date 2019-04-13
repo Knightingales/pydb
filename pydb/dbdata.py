@@ -3,12 +3,12 @@
 import redis
 import uuid
 import pickle
-import rebase
+import dbbase
 
-class redata(rebase._rebase):
+class dbdata(dbbase._dbbase):
 	# Data is a regular type (int or string)
 	def __init__(self, conn, id = None, cache = True):
-		rebase._rebase.__init__(self, conn, id, cache)
+		dbbase._dbbase.__init__(self, conn, id, cache)
 
 	def _initialize(self, data):
 		# Set the data on creation

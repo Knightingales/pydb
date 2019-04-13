@@ -1,6 +1,6 @@
 Redis DB
 ========
-Redis-backed Python-like multi-dimensional objects.
+Any DB-backed Python-like multi-dimensional objects.
 
 
 Quickstart
@@ -11,13 +11,23 @@ Basic usage:
 
 .. code-block:: python
 
+    >>> import pydb
+    
     >>> import redis
     
-    >>> import redisdb
-    
-    >>> db = redisdb.redisdb(redis.Redis(host = "localhost", port = 6379))
+    >>> db = pydb.pydb(pydb.RedisConn(redis.Redis(host = "localhost", port = 6379)))
+
+    >>> import pymongo
+
+    >>> db = pydb.pydb(pydb.MongoConn(MongoClient("mongodb://localhost:27017/")))
 
 From now on ``db`` is a dict-like python object that can contain any type of objects.
+Currently supported databases:
+
+- Redis
+
+- MongoDB
+
 Currently supported objects:
 
 - dictionary

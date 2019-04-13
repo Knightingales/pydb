@@ -1,14 +1,13 @@
 #!/usr/bin/python
 
-import redis
 import uuid
 import pickle
-import rebase
-import redict
+import dbbase
+import dbdict
 
-class redisdb(redict.redict):
+class pydb(dbdict.dbdict):
 	def __init__(self, conn, cache = True):
-		redict.redict.__init__(self, conn, "root", cache)
+		dbdict.dbdict.__init__(self, conn, "root", cache)
 
 		# Initialize root if neccessary
 		if self._get_data() is None:

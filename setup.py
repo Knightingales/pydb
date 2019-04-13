@@ -1,13 +1,13 @@
 from setuptools import setup
 
-setup(name='redisdb',
+setup(name='pydb',
       version='0.1',
-      description='redisdb',
+      description='pydb',
       url='',
       author='Knightingale',
       author_email='',
       license='',
-      packages=['redisdb'],
-      install_requires=['redis'
+      packages=['pydb'],
+      install_requires=['redis', 'pymongo'
       ],
       zip_safe=False)

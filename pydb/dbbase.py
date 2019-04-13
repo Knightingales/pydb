@@ -3,20 +3,21 @@
 import redis
 import uuid
 import pickle
+from engines import *
 
 def _retype(obj):
-	import relist
-	import redict
-	import redata
+	import dblist
+	import dbdict
+	import dbdata
 
 	if type(obj) == dict:
-		return redict.redict
+		return dbdict.dbdict
 	elif type(obj) == list:
-		return relist.relist
+		return dblist.dblist
 	else:
-		return redata.redata
+		return dbdata.dbdata
 
-class _rebase:
+class _dbbase:
 	def __init__(self, conn, id = None, cache = True):
 		self._conn = conn
 
@@ -26,11 +27,11 @@ class _rebase:
 
 	def _create(self):
 		if self._id is not None:
-			self._conn.set(self._id, pickle.dumps(None), nx = True)
+			self._conn.set(self._id, pickle.dumps(None), unique = True)
 		else:
 			id = str(uuid.uuid4())
 
-			while self._conn.set(id, pickle.dumps(None), nx = True) is None:
+			while self._conn.set(id, pickle.dumps(None), unique = True) is None:
 				id = str(uuid.uuid4())
 
 			# Set refcount

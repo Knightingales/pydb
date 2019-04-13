@@ -3,12 +3,12 @@
 import redis
 import uuid
 import pickle
-import rebase
-import redata
+import dbbase
+import dbdata
 
-class redict(rebase._rebase):
+class dbdict(dbbase._dbbase):
 	def __init__(self, conn, id = None, cache = True):
-		rebase._rebase.__init__(self, conn, id, cache)
+		dbbase._dbbase.__init__(self, conn, id, cache)
 
 		self._keys = None
 		self._cache = {}
@@ -40,7 +40,7 @@ class redict(rebase._rebase):
 
 		# Set data
 		for k in data.keys():
-			reobj = rebase._retype(data[k])(self._conn)
+			reobj = dbbase._retype(data[k])(self._conn)
 			reobj._initialize(data[k])
 			keys[k] = reobj._id
 			reobj._ref_inc()
@@ -63,7 +63,7 @@ class redict(rebase._rebase):
 
 		ret = self._get(keys[key])
 
-		if isinstance(ret, redata.redata):
+		if isinstance(ret, dbdata.dbdata):
 			ret = ret._get_data()
 
 		# Save in cache
@@ -82,10 +82,10 @@ class redict(rebase._rebase):
 		else:
 			keys = self._keys
 
-		if isinstance(value, rebase._rebase):
+		if isinstance(value, dbbase._dbbase):
 			reobj = value
 		else:
-			reobj = rebase._retype(value)(self._conn)
+			reobj = dbbase._retype(value)(self._conn)
 			reobj._initialize(value)
 
 		if key in keys:
