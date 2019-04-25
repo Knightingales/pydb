@@ -7,7 +7,7 @@ setup(name='pydb',
       author='Knightingale',
       author_email='',
       license='',
-      packages=['pydb'],
+      packages=['pydb', 'pydb/engines'],
       install_requires=['redis', 'pymongo'
       ],
       zip_safe=False)
